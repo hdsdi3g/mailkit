@@ -35,8 +35,8 @@ import tv.hd3g.commons.mailkit.SendMailDto;
 import tv.hd3g.commons.mailkit.SendMailService;
 
 /**
- * File attachement & mail resources are not yet tested
- * @see https://github.com/dotSwapna/dotEmail.github.io/tree/master/src/main
+ * File attachement and mail resources are not yet tested.
+ * See https://github.com/dotSwapna/dotEmail.github.io/tree/master/src/main
  */
 @Service
 public class SendMailServiceImpl implements SendMailService {
