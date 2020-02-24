@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "spring.main.log-startup-info",
+    "type": "java.lang.String",
+    "description": "SpringBoot startup info"
+  },
+  {
+    "name": "mailkit.default-sender",
+    "type": "java.lang.String",
+    "description": "The email address sender used for CLI test"
+  },
+  {
+    "name": "mailkit.default-recipient",
+    "type": "java.lang.String",
+    "description": "The email address recipient used for CLI test"
+  }
+]}
