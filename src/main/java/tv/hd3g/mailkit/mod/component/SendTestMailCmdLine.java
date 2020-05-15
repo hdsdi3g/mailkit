@@ -27,6 +27,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import tv.hd3g.commons.mailkit.SendMailDto;
+import tv.hd3g.commons.mailkit.SendMailDto.MessageGrade;
 import tv.hd3g.commons.mailkit.SendMailService;
 
 @Component
@@ -47,6 +48,7 @@ public class SendTestMailCmdLine implements ApplicationRunner {
 		final var mail = new SendMailDto("internal-mail-test", Locale.getDefault(),
 		        Map.of("currentdate", new Date().toString()),
 		        defaultSender, defaultRecipient);
+		mail.setGrade(MessageGrade.TEST);
 		sendMailService.sendEmail(mail);
 
 		if (args.getNonOptionArgs().contains("dont-quit-after-done") == false) {

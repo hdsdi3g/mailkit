@@ -105,8 +105,8 @@ public class SendMailServiceImpl implements SendMailService {
 			message.setPriority(sendMailDto.getGrade().getMessagePriority());
 		}
 
-		mimeMessage.setHeader("User-Agent:", "JavaMail/AuthKit");
-		mimeMessage.setHeader("Content-Language:", sendMailDto.getLang().getLanguage());
+		mimeMessage.setHeader("User-Agent", "JavaMail/MailKit");
+		mimeMessage.setHeader("Content-Language", sendMailDto.getLang().getLanguage());
 
 		setReferenceHeaders(sendMailDto, mimeMessage);
 
@@ -118,7 +118,6 @@ public class SendMailServiceImpl implements SendMailService {
 			for (final var resource : resources) {
 				final ClassPathResource imageSource = new ClassPathResource("static/" + resource);
 				message.addInline(resource, imageSource);
-				// message.addInline((String) entry.getValue(), imageSource, "image/png");
 			}
 		}
 
