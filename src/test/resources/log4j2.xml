@@ -23,22 +23,6 @@
 	</Appenders>
 
 	<Loggers>
-		<Logger name="org.apache.catalina.startup.DigesterFactory" level="error" />
-		<Logger name="org.apache.catalina.util.LifecycleBase" level="error" />
-		<Logger name="org.apache.coyote.http11.Http11NioProtocol" level="warn" />
-		<logger name="org.apache.sshd.common.util.SecurityUtils" level="warn" />
-		<Logger name="org.apache.tomcat.util.net.NioSelectorPool" level="warn" />
-		<Logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="error" />
-		<Logger name="org.hibernate.validator.internal.util.Version" level="warn" />
-		<logger name="org.springframework.boot.actuate.endpoint.jmx" level="warn" />
-		<logger name="org.springframework.boot.web.embedded.tomcat.TomcatWebServer" level="info" />
-		<logger name="org.apache.catalina.valves.AccessLogValve" level="trace" />
-
-		<logger name="org.hibernate.SQL" level="debug" />
-		<logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="error" />
-
-		<Logger name="tv.hd3g" level="error" />
-
 		<Root level="warn">
 			<AppenderRef ref="Console OUT Light" />
 			<AppenderRef ref="Console ERR Light" />
