@@ -16,6 +16,7 @@
  */
 package tv.hd3g.mailkit.mod.service;
 
+import java.io.File;
 import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
@@ -24,6 +25,7 @@ import javax.mail.internet.MimeMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -49,6 +51,10 @@ public class SendMailServiceImpl implements SendMailService {
 	private TemplateEngine htmlTemplateEngine;
 	@Autowired
 	private TemplateEngine subjectTemplateEngine;
+	@Autowired
+	private SendMailToFileService sendMailToFileService;
+	@Value("${mailkit.sendtoFile:#{null}}")
+	private File sendtoFile;
 
 	@Override
 	public void sendEmail(final SendMailDto sendMailDto) {
@@ -121,11 +127,18 @@ public class SendMailServiceImpl implements SendMailService {
 			}
 		}
 
-		log.info("Send a mail to {}: \"{}\"",
-		        () -> recipients.stream().collect(Collectors.joining(", ")),
-		        () -> subjectContent);
-
-		mailSender.send(mimeMessage);
+		if (sendtoFile == null) {
+			mailSender.send(mimeMessage);
+			log.info("Send a mail to {}: \"{}\"",
+			        () -> recipients.stream().collect(Collectors.joining(", ")),
+			        () -> subjectContent);
+		} else {
+			sendMailToFileService.write(mimeMessage);
+			log.info("Write a mail to {}: \"{}\", in {}",
+			        () -> recipients.stream().collect(Collectors.joining(", ")),
+			        () -> subjectContent,
+			        () -> sendtoFile);
+		}
 		htmlTemplateEngine.clearTemplateCache();
 	}
 

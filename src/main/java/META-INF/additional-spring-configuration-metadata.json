@@ -13,5 +13,15 @@
     "name": "mailkit.default-recipient",
     "type": "java.lang.String",
     "description": "The email address recipient used for CLI test"
+  },
+  {
+    "name": "mailkit.sendtoFile",
+    "type": "java.io.File",
+    "description": "Instead of send mails, just writes files in this directory"
+  },
+  {
+    "name": "mailkit.sendtoFileWipeOnStart",
+    "type": "java.lang.Boolean",
+    "description": "On App boot, wipe all content founded on sendtoFile."
   }
 ]}

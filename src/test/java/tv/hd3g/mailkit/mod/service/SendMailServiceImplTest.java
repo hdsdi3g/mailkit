@@ -3,9 +3,11 @@ package tv.hd3g.mailkit.mod.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -26,7 +28,9 @@ import javax.mail.internet.MimeMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.internal.util.MockUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,17 +54,27 @@ class SendMailServiceImplTest {
 	private String defaultSender;
 	@Value("${mailkit.default-recipient:no-reply@localhost}")
 	private String defaultRecipient;
+	@Value("${mailkit.sendtoFile:#{null}}")
+	File sendtoFile;
+	@Value("${mailkit.sendtoFileWipeOnStart:false}")
+	boolean wipeOnStart;
 
+	@Captor
 	ArgumentCaptor<MimeMessage> mimeMessageCaptor;
 
 	@BeforeEach
 	public void init() {
+		MockitoAnnotations.initMocks(this);
+
 		assertTrue(MockUtil.isMock(mailSender));
 		assertFalse(MockUtil.isMock(sendMailService));
 
 		when(mailSender.createMimeMessage()).thenReturn(
 		        new MimeMessage(Session.getDefaultInstance(new Properties())));
 		mimeMessageCaptor = ArgumentCaptor.forClass(MimeMessage.class);
+
+		assertNull(sendtoFile);
+		assertFalse(wipeOnStart);
 	}
 
 	private static List<Header> getHeaders(final MimeMessage message) throws MessagingException {
