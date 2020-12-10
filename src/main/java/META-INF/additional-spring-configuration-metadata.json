@@ -23,5 +23,20 @@
     "name": "mailkit.sendtoFileWipeOnStart",
     "type": "java.lang.Boolean",
     "description": "On App boot, wipe all content founded on sendtoFile."
+  },
+  {
+    "name": "mailkit.applifecycle.hostname",
+    "type": "java.lang.String",
+    "description": "An hostname to display in applifecycle mails"
+  },
+  {
+    "name": "mailkit.applifecycle.mailAddrAdmin",
+    "type": "java.lang.String",
+    "description": "The admin mail address to send applifecycle mails"
+  },
+  {
+    "name": "mailkit.applifecycle.mailSender",
+    "type": "java.lang.String",
+    "description": "The send mail address who send applifecycle mails"
   }
 ]}
