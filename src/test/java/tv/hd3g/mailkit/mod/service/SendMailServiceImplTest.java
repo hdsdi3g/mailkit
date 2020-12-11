@@ -63,8 +63,8 @@ class SendMailServiceImplTest {
 	ArgumentCaptor<MimeMessage> mimeMessageCaptor;
 
 	@BeforeEach
-	public void init() {
-		MockitoAnnotations.initMocks(this);
+	void init() throws Exception {
+		MockitoAnnotations.openMocks(this).close();
 
 		assertTrue(MockUtil.isMock(mailSender));
 		assertFalse(MockUtil.isMock(sendMailService));

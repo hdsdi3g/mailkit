@@ -38,13 +38,13 @@ class SendTestMailCmdLineTest {
 	private ArgumentCaptor<SendMailDto> emailCaptor;
 
 	@BeforeEach
-	public void init() {
+	void init() throws Exception {
+		MockitoAnnotations.openMocks(this).close();
 		/**
 		 * Mail mock preparation
 		 */
 		assertTrue(MockUtil.isMock(sendMailService));
 		emailCaptor = ArgumentCaptor.forClass(SendMailDto.class);
-		MockitoAnnotations.initMocks(this);
 	}
 
 	@Test
