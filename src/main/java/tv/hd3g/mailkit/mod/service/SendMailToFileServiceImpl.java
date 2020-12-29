@@ -43,6 +43,8 @@ public class SendMailToFileServiceImpl implements SendMailToFileService, Initial
 	private File sendtoFile;
 	@Value("${mailkit.sendtoFileWipeOnStart:false}")
 	private boolean wipeOnStart;
+	@Value("${mailkit.sendtoFileAutomaticExt:false}")
+	private boolean fileAutomaticExt;
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -112,7 +114,14 @@ public class SendMailToFileServiceImpl implements SendMailToFileService, Initial
 		Optional.ofNullable(part.getFileName()).ifPresent(t -> partList.add("FileName: " + t));
 
 		if (content instanceof String) {
-			final var contentPath = Path.of(sendtoFile.getPath(), baseName + ".txt");
+			final var strContent = (String) content;
+			var extension = ".txt";
+			if (fileAutomaticExt
+			    && (strContent.startsWith("<!DOCTYPE html>")
+			        || strContent.contains("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\""))) {
+				extension = ".html";
+			}
+			final var contentPath = Path.of(sendtoFile.getPath(), baseName + extension);
 			Files.writeString(contentPath, (String) content, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
 		} else if (content instanceof MimeMultipart) {
 			extractMultipart((Multipart) content, baseName, partList);

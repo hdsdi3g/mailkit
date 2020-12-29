@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
@@ -35,7 +36,8 @@ import tv.hd3g.commons.mailkit.SendMailService;
 @ActiveProfiles({ "realSendMailService" })
 @TestPropertySource(properties = {
                                    "mailkit.sendtoFile=target/mailkit",
-                                   "mailkit.sendtoFileWipeOnStart=true"
+                                   "mailkit.sendtoFileWipeOnStart=true",
+                                   "mailkit.sendtoFileAutomaticExt=true"
 })
 class SendMailToFileServiceTest {
 
@@ -76,5 +78,8 @@ class SendMailToFileServiceTest {
 		sendMailService.sendEmail(sendMailDto);
 
 		assertEquals(2, sendtoFile.list().length);
+		final var dropped = List.of(sendtoFile.list());
+		assertTrue(dropped.stream().anyMatch(f -> f.endsWith(".html")));
+		assertTrue(dropped.stream().anyMatch(f -> f.endsWith(".txt")));
 	}
 }

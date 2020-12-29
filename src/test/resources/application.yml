@@ -27,6 +27,7 @@ mailkit:
         mailSender: send@mail
 #    sendtoFile: target/mailkit
 #    sendtoFileWipeOnStart: true
+#    sendtoFileAutomaticExt: true
 
 server:
     port: 0
