@@ -22,17 +22,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
 import tv.hd3g.commons.mailkit.SendMailDto;
 import tv.hd3g.commons.mailkit.SendMailService;
+import tv.hd3g.mailkit.mod.configuration.AppLifeCycleConfig;
 import tv.hd3g.mailkit.mod.service.AppLifeCycleMailService;
 
 /**
@@ -45,13 +46,8 @@ public abstract class AppLifeCycleMailServiceAbstract implements AppLifeCycleMai
 	protected SendMailService sendMailService;
 	@Autowired
 	private ResourceBundleMessageSource messageSource;
-
-	@Value("${mailkit.applifecycle.hostname}")
-	private String mailHostname;
-	@Value("${mailkit.applifecycle.mailAddrAdmin}")
-	private List<String> mailAddrAdmin;
-	@Value("${mailkit.applifecycle.mailSender}")
-	private String mailSender;
+	@Autowired
+	private AppLifeCycleConfig config;
 
 	/**
 	 * @return like myapp-messages (point on myapp-messages.properties / myapp-messages_fr.properties...)
@@ -87,11 +83,12 @@ public abstract class AppLifeCycleMailServiceAbstract implements AppLifeCycleMai
 		final var fullTemplateVars = new HashMap<>(templateVars);
 		fullTemplateVars.put("appName", getAppName());
 		fullTemplateVars.put("serviceName", serviceName);
-		fullTemplateVars.put("hostname", mailHostname);
+		fullTemplateVars.put("hostname", config.getHostname());
 		fullTemplateVars.put("origin", getAppOrigin());
 
+		final var mailAddrAdminList = Optional.ofNullable(config.getMailAddrAdmin()).orElse(List.of());
 		final var sendMailDto = new SendMailDto(templateName, Locale.getDefault(), fullTemplateVars,
-		        mailSender, mailAddrAdmin, List.of(), List.of());
+		        config.getMailSender(), mailAddrAdminList, List.of(), List.of());
 		sendMailService.sendEmail(sendMailDto);
 	}
 

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.thymeleaf.TemplateEngine;
 
+import tv.hd3g.mailkit.mod.configuration.MailKitSetup;
+
 @SpringBootTest
 class MailKitSetupTest {
 

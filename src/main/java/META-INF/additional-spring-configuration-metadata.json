@@ -25,18 +25,8 @@
     "description": "On App boot, wipe all content founded on sendtoFile."
   },
   {
-    "name": "mailkit.applifecycle.hostname",
-    "type": "java.lang.String",
-    "description": "An hostname to display in applifecycle mails"
-  },
-  {
-    "name": "mailkit.applifecycle.mailAddrAdmin",
-    "type": "java.lang.String",
-    "description": "The admin mail address to send applifecycle mails"
-  },
-  {
-    "name": "mailkit.applifecycle.mailSender",
-    "type": "java.lang.String",
-    "description": "The send mail address who send applifecycle mails"
+    "name": "mailkit.applifecycle",
+    "type": "tv.hd3g.mailkit.mod.configuration.AppLifeCycleConfig",
+    "description": "The full configuration of AppLifeCycle"
   }
 ]}
