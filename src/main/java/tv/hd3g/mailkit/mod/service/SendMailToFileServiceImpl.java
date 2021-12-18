@@ -8,6 +8,7 @@ import static java.util.stream.Collectors.toUnmodifiableList;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -32,8 +33,6 @@ import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import tv.hd3g.commons.IORuntimeException;
 
 @Service
 public class SendMailToFileServiceImpl implements SendMailToFileService, InitializingBean {
@@ -77,7 +76,7 @@ public class SendMailToFileServiceImpl implements SendMailToFileService, Initial
 			final var headersPath = Path.of(sendtoFile.getPath(), baseName + "_headers.txt");
 			Files.writeString(headersPath, headers, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
 		} catch (final IOException e) {
-			throw new IORuntimeException(e);
+			throw new UncheckedIOException(e);
 		}
 	}
 
@@ -85,7 +84,7 @@ public class SendMailToFileServiceImpl implements SendMailToFileService, Initial
 	                              final String baseName,
 	                              final List<String> partList) throws MessagingException, IOException {
 		final var count = multipart.getCount();
-		for (int pos = 0; pos < count; pos++) {
+		for (var pos = 0; pos < count; pos++) {
 			final var ref = "_mp" + pos;
 			partList.add("=== start multipart: " + pos + " ===");
 			extractPart(multipart.getBodyPart(pos), baseName + ref, partList);
