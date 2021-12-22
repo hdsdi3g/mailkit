@@ -31,18 +31,6 @@
 		</dependency>
 	</dependencies>
 
-	<organization>
-		<name>hd3g.tv</name>
-		<url>https://hd3g.tv</url>
-	</organization>
-	<developers>
-		<developer>
-			<name>hdsdi3g</name>
-			<email>admin@hd3g.tv</email>
-			<organization>hd3g.tv</organization>
-			<organizationUrl>https://hd3g.tv</organizationUrl>
-		</developer>
-	</developers>
 	<scm>
 		<connection>scm:git:https://github.com/hdsdi3g/mailkit.git</connection>
 		<developerConnection>scm:git:https://github.com/hdsdi3g/mailkit.git</developerConnection>
